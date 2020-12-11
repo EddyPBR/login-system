@@ -1,0 +1,28 @@
+{
+  "name": "login-system-server",
+  "version": "1.0.0",
+  "description": "A complete login system, with registration and password recovery by email",
+  "main": "index.ts",
+  "repository": "https://github.com/EddyPBR/login-system",
+  "author": "EddyPBR",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "start": "node ./dist/index.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --files --ignore-watch node_modules --no-notify index.ts"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-preset-typescript": "^7.0.0-alpha.19",
+    "dotenv": "^8.2.0",
+    "ts-node-dev": "^1.1.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.1.2"
+  }
+}
