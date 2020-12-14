@@ -38,10 +38,10 @@
       ],
       "@middlewares/*": [
         "./src/middlewares/*"
-      ],
+      ]
     }
   },
   "include": [
     "src/**/*"
-  ],
+  ]
 }
