@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  server:
+    container_name: login-system-api
+    restart: always
+    build: .
+    ports:
+      - "3332:3333"
+    links:
+      - database
+    volumes:
+      - .:/usr/src/app
+  database:
+    container_name: login-system-mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
