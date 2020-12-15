@@ -88,7 +88,7 @@ export default {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: "ts-jest",
+  preset: "@shelf/jest-mongodb",
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -112,9 +112,7 @@ export default {
   rootDir: ".",
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: [
-    "<rootDir>"
-  ],
+  roots: ["<rootDir>"],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
@@ -164,7 +162,7 @@ export default {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  transform: {"^.+\\.ts$": "ts-jest"},
+  transform: { "^.+\\.ts$": "ts-jest" },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -179,7 +177,7 @@ export default {
   // verbose: undefined,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
-  // watchPathIgnorePatterns: [],
+  watchPathIgnorePatterns: ["globalConfig"],
 
   // Whether to use watchman for file crawling
   // watchman: true,
