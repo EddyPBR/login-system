@@ -28,6 +28,8 @@
     "semi": [
       2,
       "always"
-    ]
+    ],
+    "@typescript-eslint/no-this-alias": ["off"],
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }
