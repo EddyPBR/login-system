@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 import "dotenv/config";
 
 mongoose.connect(
-  `mongodb://${process.env.DB_HOST}/${process.env.DB_PORT}`,
+  process.env.MONGO_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true,
   },
   (error) =>
-    error ? console.error(error.message) : console.warn("DATABASE CONNECTED")
+    error ? console.log(error.message) : console.log("DATABASE CONNECTED")
 );
 
 mongoose.set("useCreateIndex", true);
