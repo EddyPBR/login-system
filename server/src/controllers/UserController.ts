@@ -37,19 +37,43 @@ class UserController {
     const { _id } = request.params;
     const { email, password } = request.body;
 
-    const updateUser = await User.findOneAndUpdate(
-      { _id },
-      {
-        email: email,
-        password: bcrypt.hashSync(password, 8),
-      }
-    );
+    try {
+      const updateUser = await User.findOneAndUpdate(
+        { _id },
+        {
+          email: email,
+          password: bcrypt.hashSync(password, 8),
+        }
+      );
 
-    return updateUser
-      ? response.status(201).json(updateUser)
-      : response.status(404).json({
-          error: "user not found",
-        });
+      return updateUser
+        ? response.status(200).json(updateUser)
+        : response.status(404).json({
+            error: "user not found",
+          });
+    } catch (error) {
+      response.status(500).json({
+        error: "internal server error",
+      });
+    }
+  }
+
+  async delete(request: Request, response: Response) {
+    const { _id } = request.params;
+
+    try {
+      const deletedUser = await User.findByIdAndDelete({ _id });
+
+      return deletedUser
+        ? response.status(200).json(deletedUser)
+        : response.status(404).json({
+            error: "user not found",
+          });
+    } catch (error) {
+      response.status(500).json({
+        error: "internal server error",
+      });
+    }
   }
 }
 
