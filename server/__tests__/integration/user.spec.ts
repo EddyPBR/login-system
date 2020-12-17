@@ -56,7 +56,7 @@ describe("Users route", () => {
     expect(response.status).toBe(201);
   });
 
-  it("should be FAIL to update a user", async () => {
+  it("should be FAIL to update a user, because _id is incorectly", async () => {
     const _id = "5fdb68ef55619f033762babc"
 
     const response = await request(app).put(`/users/${_id}`).send({
@@ -67,5 +67,4 @@ describe("Users route", () => {
     expect(response.status).toBe(500);
   });
 
-  
 });
