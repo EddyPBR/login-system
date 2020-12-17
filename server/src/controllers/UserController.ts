@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
 
 import User from "@models/User";
 
@@ -30,6 +31,25 @@ class UserController {
         error: "internal server error",
       });
     }
+  }
+
+  async update(request: Request, response: Response) {
+    const { _id } = request.params;
+    const { email, password } = request.body;
+
+    const updateUser = await User.findOneAndUpdate(
+      { _id },
+      {
+        email: email,
+        password: bcrypt.hashSync(password, 8),
+      }
+    );
+
+    return updateUser
+      ? response.status(201).json(updateUser)
+      : response.status(500).json({
+          error: "internal server error",
+        });
   }
 }
 
