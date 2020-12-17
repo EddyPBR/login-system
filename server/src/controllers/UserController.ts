@@ -47,8 +47,8 @@ class UserController {
 
     return updateUser
       ? response.status(201).json(updateUser)
-      : response.status(500).json({
-          error: "internal server error",
+      : response.status(404).json({
+          error: "user not found",
         });
   }
 }
