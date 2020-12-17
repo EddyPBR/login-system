@@ -42,4 +42,30 @@ describe("Users route", () => {
 
     expect(response.status).toBe(409);
   });
+
+  it("should be update a user succesfully", async () => {
+    // The two first line is only to get the _id for update
+    const { _id } = await User.findOne({ email: "newuser@mail.com" }, "_id");
+    expect(_id).not.toBeFalsy();
+
+    const response = await request(app).put(`/users/${_id}`).send({
+      email: "updateuser@mail.com",
+      password: "abcd1234",
+    });
+
+    expect(response.status).toBe(201);
+  });
+
+  it("should be FAIL to update a user", async () => {
+    const _id = "5fdb68ef55619f033762babc"
+
+    const response = await request(app).put(`/users/${_id}`).send({
+      email: "updateuser@mail.com",
+      password: "abcd1234",
+    });
+
+    expect(response.status).toBe(500);
+  });
+
+  
 });
