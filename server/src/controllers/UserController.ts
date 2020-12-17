@@ -5,9 +5,33 @@ import User from "@models/User";
 
 class UserController {
   async index(request: Request, response: Response) {
-    return response.status(200).json({
-      message: "hello world",
-    });
+    try {
+      const users = await User.find();
+
+      return response.status(200).json(users);
+    } catch (error) {
+      return response.status(500).json({
+        error: "internal server error",
+      });
+    }
+  }
+
+  async search(request: Request, response: Response) {
+    const { _id } = request.params;
+
+    try {
+      const user = await User.findOne({ _id });
+
+      return user
+        ? response.status(200).json(user)
+        : response.status(404).json({
+            error: "user not found",
+          });
+    } catch (error) {
+      return response.status(500).json({
+        error: "internal server error",
+      });
+    }
   }
 
   async create(request: Request, response: Response) {
