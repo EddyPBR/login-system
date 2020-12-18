@@ -18,6 +18,24 @@ describe("Check the process in a authentication", () => {
     await mongoose.connection.close();
   });
 
+  it("should be FAIL to authenticate a user, because email is pooly formated", async () => {
+    const response = await request(app).post("/sessions").send({
+      email: "fakeadmin@mailcom",
+      password: "1234qwer",
+    });
+
+    expect(response.status).toBe(400);
+  });
+
+  it("should be FAIL to authenticate a user, because password is pooly formated", async () => {
+    const response = await request(app).post("/sessions").send({
+      email: "fakeadmin@mailcom",
+      password: "12qw",
+    });
+
+    expect(response.status).toBe(400);
+  });
+
   it("should be FAIL to authenticate a user, because email not found", async () => {
     const response = await request(app).post("/sessions").send({
       email: "fakeadmin@mail.com",
