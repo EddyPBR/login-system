@@ -6,7 +6,7 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
   },
   (error) =>
     error ? console.log(error.message) : console.log("DATABASE CONNECTED")

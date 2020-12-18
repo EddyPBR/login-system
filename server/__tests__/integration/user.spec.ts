@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import app from "../../src/app";
 import User from "../../src/models/User";
 
-describe("Users route", () => {
+describe("Test a CRUD for user route", () => {
   beforeAll(async () => {
     await User.deleteMany({});
   });
@@ -47,7 +47,7 @@ describe("Users route", () => {
     expect(response.status).toBe(200);
   });
 
-  it("should be FAIL to find a user by _id param", async () => {
+  it("should be FAIL to find a user by _id param, because _id is incorrectly", async () => {
     const _id = "5fdb68ef55619f033762babc";
 
     const response = await request(app).get(`/users/${_id}`);
