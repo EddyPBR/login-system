@@ -1,5 +1,7 @@
 import express from "express";
 
+import checkAuthentication from "@middlewares/authentication";
+
 import UserController from "@controllers/UserController";
 import SessionController from "@controllers/SessionController";
 
@@ -15,5 +17,6 @@ routes.put("/users/:_id", userController.update);
 routes.delete("/users/:_id", userController.delete);
 
 routes.post("/sessions", sessionController.authenticate);
+routes.get("/sessions", checkAuthentication, sessionController.check);
 
 export default routes;

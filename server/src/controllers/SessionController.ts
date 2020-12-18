@@ -34,6 +34,12 @@ class SessionController {
       token,
     });
   }
+
+  async check(request: Request, response: Response) {
+    return response.status(200).json({
+      message: "user is authenticated",
+    });
+  }
 }
 
 export default SessionController;
