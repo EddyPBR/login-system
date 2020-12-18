@@ -44,4 +44,21 @@ describe("Check the process in a authentication", () => {
 
     expect(response.status).toBe(200);
   });
+
+  it("should be authenticate a user, and check a route with needs a authentication to access", async () => {
+    const authenticateUser = await request(app).post("/sessions").send({
+      email: "admin@mail.com",
+      password: "1234qwer",
+    });
+
+    expect(authenticateUser.status).toBe(200);
+
+    const { token } = authenticateUser.body;
+
+    expect(token).toBeDefined;
+
+    const checkAuthentication = await request(app).get("/sessions").set("authorization", token).send({});
+
+    expect(checkAuthentication.status).toBe(200);
+  });
 });
