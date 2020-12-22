@@ -54,6 +54,8 @@ routes.delete(
   userController.delete
 );
 
+routes.get("/sessions", checkAuthentication, sessionController.check);
+
 routes.post(
   "/sessions",
   celebrate(
@@ -69,6 +71,20 @@ routes.post(
   ),
   sessionController.authenticate
 );
-routes.get("/sessions", checkAuthentication, sessionController.check);
+
+routes.put(
+  "/sessions/recover-password",
+  celebrate(
+    {
+      body: Joi.object().keys({
+        email: Joi.string().email().required(),
+      }),
+    },
+    {
+      abortEarly: false,
+    }
+  ),
+  sessionController.recoverPassword
+);
 
 export default routes;
