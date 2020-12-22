@@ -79,4 +79,28 @@ describe("Check the process in a authentication", () => {
 
     expect(checkAuthentication.status).toBe(200);
   });
+
+  it("should be create a token for reset password", async() => {
+    const userResetPassword = await request(app).put("/sessions/recover-password").send({
+      email: "admin@mail.com",
+    });
+
+    expect(userResetPassword.status).toBe(200);
+  });
+
+  it("should be FAIL to create a token for reset password, because email not found", async() => {
+    const userResetPassword = await request(app).put("/sessions/recover-password").send({
+      email: "adminnn@mail.com",
+    });
+
+    expect(userResetPassword.status).toBe(404);
+  });
+
+  it("should be FAIL to create a token for reset password, because email is poorly formated", async() => {
+    const userResetPassword = await request(app).put("/sessions/recover-password").send({
+      email: "adminnn@com",
+    });
+
+    expect(userResetPassword.status).toBe(400);
+  });
 });
