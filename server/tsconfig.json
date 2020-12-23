@@ -38,6 +38,9 @@
       ],
       "@middlewares/*": [
         "./src/middlewares/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
       ]
     }
   },

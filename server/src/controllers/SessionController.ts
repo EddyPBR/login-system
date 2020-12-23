@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import Mail from "@services/Mail";
 
 import User from "@models/User";
 
@@ -66,13 +67,24 @@ class SessionController {
         },
       });
 
-      return response.status(200).json({
-        success: "token has been generated for reset password",
-      });
+      const subject = "Login System Api - Recover Password";
+
+      const mail = new Mail(email, subject, token);
+
+      try {
+        await mail.sendMail();
+
+        return response.status(200).json({
+          success: "a email has sended",
+        });
+      } catch (error) {
+        return response.status(400).json({
+          error: "error to send a email",
+        });
+      }
     } catch (error) {
-      console.log(error);
       response.status(400).json({
-        error: "cannot reset password, try again",
+        error: "error on forgot password, try again",
       });
     }
   }
