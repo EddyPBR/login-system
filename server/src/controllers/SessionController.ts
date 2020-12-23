@@ -55,7 +55,7 @@ class SessionController {
         });
       }
 
-      const token = crypto.randomBytes(20).toString("hex");
+      const token = crypto.randomBytes(24).toString("hex");
 
       const now = new Date();
       now.setHours(now.getHours() + 1);
@@ -85,6 +85,48 @@ class SessionController {
     } catch (error) {
       response.status(400).json({
         error: "error on forgot password, try again",
+      });
+    }
+  }
+
+  async resetPassword(request: Request, response: Response) {
+    const { email, token, password } = request.body;
+
+    try {
+      const user = await User.findOne({ email }).select(
+        "+passwordResetToken passwordResetExpires"
+      );
+
+      if (!user) {
+        return response.status(404).json({
+          error: "user not found",
+        });
+      }
+
+      console.log(user);
+
+      if (token !== user.passwordResetToken) {
+        return response.status(403).json({
+          error: "invalid token",
+        });
+      }
+
+      const now = new Date();
+
+      if (now > user.passwordResetExpires) {
+        return response.status(401).json({
+          error: "expired Token",
+        });
+      }
+
+      await User.findOneAndUpdate(email, { password });
+
+      return response.status(200).json({
+        sucess: "your password has been modified",
+      });
+    } catch (error) {
+      return response.status(400).json({
+        error: "cannot reset password, try again",
       });
     }
   }

@@ -87,4 +87,21 @@ routes.put(
   sessionController.recoverPassword
 );
 
+routes.put(
+  "/sessions/reset-password",
+  celebrate(
+    {
+      body: Joi.object().keys({
+        email: Joi.string().email().required(),
+        token: Joi.string().required(),
+        password: Joi.string().required(),
+      }),
+    },
+    {
+      abortEarly: false,
+    }
+  ),
+  sessionController.resetPassword
+);
+
 export default routes;
