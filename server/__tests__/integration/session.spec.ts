@@ -103,4 +103,53 @@ describe("Check the process in a authentication", () => {
 
     expect(userResetPassword.status).toBe(400);
   });
+
+  it("should be reset a password", async() => {
+    const userToReset = await User.findOne({ email: "admin@mail.com" }).select(
+      '+passwordResetToken passwordResetExpires email'
+    );
+
+    expect(userToReset).toBeDefined();
+
+    const resetPassword = await request(app).put("/sessions/reset-password").send({
+      email: userToReset.email,
+      token: userToReset.passwordResetToken,
+      password: "newPass123",
+    });
+
+    expect(resetPassword.status).toBe(200);
+  });
+
+  it("should be FAIL to reset a password, because email not found", async() => {
+    const userToReset = await User.findOne({ email: "admin@mail.com" }).select(
+      '+passwordResetToken passwordResetExpires email'
+    );
+
+    expect(userToReset).toBeDefined();
+
+    const resetPassword = await request(app).put("/sessions/reset-password").send({
+      email: "adminnnn@mail.com",
+      token: userToReset.passwordResetToken,
+      password: "newPass123",
+    });
+
+    expect(resetPassword.status).toBe(404);
+  });
+
+  it("should be Fail to reset a password, because token is invalid", async() => {
+    const userToReset = await User.findOne({ email: "admin@mail.com" }).select(
+      '+passwordResetToken passwordResetExpires email'
+    );
+
+    expect(userToReset).toBeDefined();
+
+    const resetPassword = await request(app).put("/sessions/reset-password").send({
+      email: userToReset.email,
+      token: `sadhu12hj1e1o2kjvjJI23OJVJKj23o4vjkJV3IOJKOJv4k2jVKJVK35j3J3KJkbjBK3Jk3jKV3JKB3JKHVK3JV3OJPNOJ2PVIOKE2JKjIJWPO4I3J4NQKNJI3OVJKKQJENEJj4oijkjfoqjiwjeiqej3j1126j21kb1kebjm12k5m12kb1312`,
+      password: "newPass123",
+    });
+
+    expect(resetPassword.status).toBe(403);
+  });
+
 });
